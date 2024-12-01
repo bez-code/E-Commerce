@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   searchTerm: string = '';
-
+  sortBy: string = ''
   constructor(
     private productService: ProductService,
     private cartService: CartService,
@@ -27,16 +27,10 @@ export class ProductListComponent implements OnInit {
   loadProduct() {
     this.productService.getProducts().subscribe(products => {
       this.products = products,
-      this.filteredProducts = products;
+        this.filteredProducts = products;
     })
   }
 
-  filterProducts(): void {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(term)
-    );
-  }
 
   addToCard(product: Product): void {
     this.cartService.addCart(product).subscribe();
@@ -49,6 +43,29 @@ export class ProductListComponent implements OnInit {
       horizontalPosition: "center",
       verticalPosition: "top"
     });
+  }
+
+  applyFilter(event: Event): void {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+
+    const term = this.searchTerm.toLowerCase();
+    this.filteredProducts = this.products.filter(product =>
+      product.name.toLowerCase().includes(term)
+    );
+    this.sortProducts(this.sortBy)
+  }
+
+  sortProducts(sortValue: string): void {
+    let sortBy = sortValue
+
+    if (sortBy === 'name') {
+      this.filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'priceHighLow') {
+      this.filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'priceLowHigh') {
+      this.filteredProducts.sort((a, b) => b.price - a.price);
+
+    }
   }
 
 

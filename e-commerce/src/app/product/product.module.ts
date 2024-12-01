@@ -5,7 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -18,8 +20,9 @@ import { FormsModule } from '@angular/forms';
     MatGridListModule,
     FlexLayoutModule,
     MatSnackBarModule,
-    FormsModule
-
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class ProductModule { }
